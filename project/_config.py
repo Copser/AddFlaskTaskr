@@ -14,3 +14,6 @@ SECRET_KEY = 'E\xf37z*\xd0\x96\xea}[\xea\xe2\xcad;\xd2_\xd3\x02\xc1\x98M\xf5'
 
 # define the full path for the database
 DATABASE_PATH = os.path.join(basedir, DATABASE)
+
+# the database uri
+SQLALCHEMY_DATABASE_URI = "sqlite:///" + DATABASE_PATH

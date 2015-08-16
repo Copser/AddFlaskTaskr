@@ -24,7 +24,7 @@ with sqlite3.connect(DATABASE_PATH) as connection:
 
     # insert data to tasks table
     c.executemany("""INSERT INTO tasks (name, due_date, priority, status, posted_data, user_id)
-                     VALUES (?, ?, ?, ?, ?, ?)""", data)
+ http://www.w3schools.com/sql/sql_foreignkey.asp                    VALUES (?, ?, ?, ?, ?, ?)""", data)
 
     # delete old_tasks table
     c.execute("DROP TABLE old_tasks")

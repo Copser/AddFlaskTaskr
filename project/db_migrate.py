@@ -23,8 +23,8 @@ with sqlite3.connect(DATABASE_PATH) as connection:
     data = [(row[0], row[1], row[2], row[3], datetime.now(), 1) for row in c.fetchall()]
 
     # insert data to tasks table
-    c.executemany("""INSERT INTO tasks (name, due_date, priority, status, posted_data, user_id)
- http://www.w3schools.com/sql/sql_foreignkey.asp                    VALUES (?, ?, ?, ?, ?, ?)""", data)
+    c.executemany("""INSERT INTO tasks (name, due_date, priority, status, posted_date, user_id)
+        VALUES (?, ?, ?, ?, ?, ?)""", data)
 
     # delete old_tasks table
     c.execute("DROP TABLE old_tasks")

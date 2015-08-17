@@ -92,7 +92,7 @@ def tasks():
 
 
 # Add new tasks
-@app.route('/add/', methods=['POST'])
+@app.route('/add/', methods=['GET', 'POST'])
 @login_required
 def new_task():
     form = AddTaskForm(request.form)

@@ -31,6 +31,10 @@ class AllTest(unittest.TestCase):
         new_user = User("michael", "michael@mherman.org", "michaelherman")
         db.session.add(new_user)
         db.session.commit()
+        test = db.session.query(User).all()
+        for t in test:
+            t.name
+        assert t.name == "michael"
 
 
 if __name__ == "__main__":

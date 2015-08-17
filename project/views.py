@@ -104,7 +104,6 @@ def new_task():
                 form.priority.data,
                 datetime.datetime.utcnow(),
                 '1',
-                '1',
                 session['user_id']
             )
             db.session.add(new_task)

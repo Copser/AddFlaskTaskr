@@ -18,20 +18,22 @@ db = SQLAlchemy(app)
 from models import Task, User
 
 
-# creating helper function for task() and new_task()
-def open_tasks():
-    return db.session.query(Task).filter_by(status='1').order_by(Task.due_date.asc())
-
-
-def closed_tasks():
-    return db.session.query(Task).filter_by(status='0').order_by(Task.due_date.asc())
-
-
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
             flash(u"Error in the %s field - %s" % (
                 getattr(form, field).label.text, error), 'error')
+
+
+# creating helper function for task() and new_tasjk()
+def open_tasks():
+    return db.session.query(Task).filter_by(
+        status='1').order_by(Task.due_date.asc())
+
+
+def closed_tasks():
+    return db.session.query(Task).filter_by(
+        status='0').order_by(Task.due_date.asc())
 
 
 # helper functions
@@ -103,8 +105,8 @@ def tasks():
     return render_template(
         'tasks.html',
         form=AddTaskForm(request.form),
-        open_tasks=open_tasks,
-        closed_tasks=closed_tasks
+        open_tasks=open_tasks(),
+        closed_tasks=closed_tasks()
     )
 
 
@@ -130,7 +132,7 @@ def new_task():
             return redirect(url_for('tasks'))
         else:
             return render_template('tasks.html', form=form, error=error)
-    return render_template('tasks.html', form=form, error=error, open_tasks=open_tasks, closed_tasks=closed_tasks)
+    return render_template('tasks.html', form=form, error=error, open_tasks=open_tasks(), closed_tasks=closed_tasks())
 
 
 # Mark tasks as complete

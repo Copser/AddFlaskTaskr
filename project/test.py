@@ -148,7 +148,7 @@ class AllTest(unittest.TestCase):
 
     # Users can complete tasks
     def test_users_can_complete_tasks(self):
-        self.create_user('Michael', 'michael@realpython', 'python')
+        self.create_user('Michael', 'michael@realpython.com', 'python')
         self.login('Michael', 'python')
         self.app.get('tasks/', follow_redirects=True)
         self.create_tasks()
@@ -157,12 +157,25 @@ class AllTest(unittest.TestCase):
 
     # Users can delete tasks
     def test_user_can_delete_tasks(self):
-        self.create_user('Michael', 'michael@realpython', 'python')
+        self.create_user('Michael', 'michael@realpython.com', 'python')
         self.login('Michael', 'python')
         self.app.get('tasks/', follow_redirects=True)
         self.create_tasks()
         response = self.app.get("delete/1/", follow_redirects=True)
         self.assertIn(b'The task was deleted. Why not add a new one?', response.data)
+
+    # Only one user can add/delete tasks test
+    def test_users_cannot_complete_tasks_that_are_not_created_by_them(self):
+        self.create_user('Michael', 'michael@realpython.com', 'python')
+        self.login('Michael', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_tasks()
+        self.logout()
+        self.create_user('Fletcher', 'fletcher@realpython.com', 'python101')
+        self.login('Fletcher', 'python101')
+        self.app.get('tasks/', follow_redirects=True)
+        response = self.app.get("complete/1/", follow_redirects=True)
+        self.assertIn(b'The task is complete. Why not add a new one?', response.data)
 
 
 if __name__ == "__main__":

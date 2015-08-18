@@ -38,6 +38,18 @@ class AllTest(unittest.TestCase):
     def logout(self):
         return self.app.get('logout/', follow_redirects=True)
 
+    def create_user(self, name, email, password):
+        new_user = User(name=name, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+    def create_tasks(self):
+        return self.app.post('add/', data=dict(
+            name='Go to bank',
+            due_date='09/20/2015',
+            status='1'
+        ), follow_redirects=True)
+
     # Tests
 
     # each test should start whit 'test'
@@ -100,6 +112,25 @@ class AllTest(unittest.TestCase):
     def test_not_logged_in_users_cannot_logout(self):
         response = self.logout()
         self.assertNotIn(b'Goodbye!', response.data)
+
+    def test_logged_in_users_can_access_tasks_page(self):
+        self.register('Fletcher', 'fletcher@realpython.com', 'python101', 'python101')
+        self.login('Fletcher', 'python101')
+        response = self.app.get('tasks/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Add a new task:", response.data)
+
+    def test_not_logged_in_users_cannot_access_task_page(self):
+        response = self.app.get('tasks/', follow_redirects=True)
+        self.assertIn(b'You need to login first.', response.data)
+
+    # User can add tasks(validation form)
+    def test_users_can_add_tasks(self):
+        self.create_user('Michael', 'michael@realpython.com', 'python')
+        self.login('Michael', 'python')
+        self.app.get('task/', follow_redirects=True)
+        response = self.create_tasks()
+        self.assertIn(b'New entry was successfully posted. Thanks.', response.data)
 
 
 if __name__ == "__main__":

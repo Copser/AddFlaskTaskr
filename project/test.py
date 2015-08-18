@@ -35,6 +35,9 @@ class AllTest(unittest.TestCase):
                              confirm=confirm),
                              follow_redirects=True)
 
+    def logout(self):
+        return self.app.get('logout/', follow_redirects=True)
+
     # Tests
 
     # each test should start whit 'test'
@@ -86,6 +89,17 @@ class AllTest(unittest.TestCase):
         self.app.get('register/', follow_redirects=True)
         response = self.register('Michael', 'michael@realpython.com', 'python', 'python')
         self.assertIn(b'That username and/or email already exist.', response.data)
+
+    # Testing for logged_in and not logged_in users
+    def test_logged_in_users_can_logout(self):
+        self.register('Fletcher', 'letcher@realpython.com', 'python101', 'python101')
+        self.login('Fletcher', 'python101')
+        response = self.logout()
+        self.assertIn(b'Goodbye!', response.data)
+
+    def test_not_logged_in_users_cannot_logout(self):
+        response = self.logout()
+        self.assertNotIn(b'Goodbye!', response.data)
 
 
 if __name__ == "__main__":

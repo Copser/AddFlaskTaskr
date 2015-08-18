@@ -132,6 +132,38 @@ class AllTest(unittest.TestCase):
         response = self.create_tasks()
         self.assertIn(b'New entry was successfully posted. Thanks.', response.data)
 
+    # If there is an error when adding new tasks!
+    def test_users_cannot_add_tasks_when_error(self):
+        self.create_user('Michael', 'michael@realpython.com', 'python')
+        self.login('Michael', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        response = self.app.post('add/', data=dict(
+            name='Go to the bank',
+            due_date='',
+            priority='1',
+            posted_date='09/20/2015',
+            status='1'
+        ), follow_redirects=True)
+        self.assertIn(b'This field is required.', response.data)
+
+    # Users can complete tasks
+    def test_users_can_complete_tasks(self):
+        self.create_user('Michael', 'michael@realpython', 'python')
+        self.login('Michael', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_tasks()
+        response = self.app.get("complete/1/", follow_redirects=True)
+        self.assertIn(b'The task is complete. Nice!', response.data)
+
+    # Users can delete tasks
+    def test_user_can_delete_tasks(self):
+        self.create_user('Michael', 'michael@realpython', 'python')
+        self.login('Michael', 'python')
+        self.app.get('tasks/', follow_redirects=True)
+        self.create_tasks()
+        response = self.app.get("delete/1/", follow_redirects=True)
+        self.assertIn(b'The task was deleted. Why not add a new one?', response.data)
+
 
 if __name__ == "__main__":
     unittest.main()

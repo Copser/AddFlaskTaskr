@@ -52,10 +52,16 @@ class AllTest(unittest.TestCase):
         self.assertIn(b'Invalid username or password.', response.data)
 
     # testing login form
-    def test_ispresent_on_login_page(self):
+    def test_form_is_present_on_login_page(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Please sign in to access tour task list', response.data)
+
+    # adding user to test
+    def test_users_can_login(self):
+        self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        response = self.login('Michael', 'python')
+        self.assertIn('Welcome!', response.data)
 
 
 if __name__ == "__main__":

@@ -91,7 +91,7 @@ def register():
             try:
                 db.session.add(new_user)
                 db.session.commit()
-                flash("Thanks for registering. Please Login.")
+                flash("Thanks for registering, Please login.")
                 return redirect(url_for('login'))
             except IntegrityError:
                 error = "That username and/or email already exist."

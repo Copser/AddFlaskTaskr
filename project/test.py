@@ -54,7 +54,7 @@ class AllTest(unittest.TestCase):
     def test_form_is_present_on_login_page(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Please sign in to access tour task list', response.data)
+        self.assertIn(b'Please sign in to access your task list', response.data)
 
     def test_users_cannot_login_unless_registered(self):
         response = self.login('foo', 'bar')
@@ -81,7 +81,7 @@ class AllTest(unittest.TestCase):
     def test_user_registration(self):
         self.app.get('register/', follow_redirects=True)
         response = self.register('Michael', 'michael@realpython.com', 'python', 'python')
-        self.assertIn(b'Thanks for tegistering, Please login.', response.data)
+        self.assertIn(b'Thanks for registering. Please Login.', response.data)
 
     def test_user_registration_error(self):
         self.app.get('register/', follow_redirects=True)

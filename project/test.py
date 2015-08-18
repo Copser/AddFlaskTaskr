@@ -47,15 +47,15 @@ class AllTest(unittest.TestCase):
             t.name
         assert t.name == "michael"
 
-    def test_users_cannot_login_unless_registered(self):
-        response = self.login('foo', 'bar')
-        self.assertIn(b'Invalid username or password.', response.data)
-
     # testing login form
     def test_form_is_present_on_login_page(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Please sign in to access tour task list', response.data)
+
+    def test_users_cannot_login_unless_registered(self):
+        response = self.login('foo', 'bar')
+        self.assertIn(b'Invalid username or password.', response.data)
 
     # adding user to test
     def test_users_can_login(self):
@@ -68,6 +68,11 @@ class AllTest(unittest.TestCase):
         self.register('Michael', 'michael@realpython.com', 'python', 'python')
         response = self.login('alert("alert box!");', 'foo')
         self.assertIn(b'Invalid username or password.', response.data)
+
+    def test_form_is_present_on_register_page(self):
+        response = self.app.get('register/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Please register to access the task list.', response.data)
 
 
 if __name__ == "__main__":

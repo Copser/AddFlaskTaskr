@@ -63,6 +63,12 @@ class AllTest(unittest.TestCase):
         response = self.login('Michael', 'python')
         self.assertIn('Welcome!', response.data)
 
+    # adding invalid user data to test
+    def test_invalid_form_data(self):
+        self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        response = self.login('alert("alert box!");', 'foo')
+        self.assertIn(b'Invalid username or password.', response.data)
+
 
 if __name__ == "__main__":
     unittest.main()

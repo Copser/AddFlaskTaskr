@@ -81,7 +81,7 @@ class AllTest(unittest.TestCase):
     def test_user_registration(self):
         self.app.get('register/', follow_redirects=True)
         response = self.register('Michael', 'michael@realpython.com', 'python', 'python')
-        self.assertIn(b'Thanks for registering. Please Login.', response.data)
+        self.assertIn(b'Thanks for registering, Please login.', response.data)
 
     def test_user_registration_error(self):
         self.app.get('register/', follow_redirects=True)

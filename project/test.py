@@ -74,6 +74,19 @@ class AllTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Please register to access the task list.', response.data)
 
+    # Users can register(form vaidation)
+    def test_user_registration(self):
+        self.app.get('register/', follow_redirects=True)
+        response = self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        self.assertIn(b'Thanks for tegistering, Please login.', response.data)
+
+    def test_user_registration_error(self):
+        self.app.get('register/', follow_redirects=True)
+        self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        self.app.get('register/', follow_redirects=True)
+        response = self.register('Michael', 'michael@realpython.com', 'python', 'python')
+        self.assertIn(b'That username and/or email already exist.', response.data)
+
 
 if __name__ == "__main__":
     unittest.main()

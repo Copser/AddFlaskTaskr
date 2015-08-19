@@ -1,6 +1,10 @@
 body {
-  font-family: sans-serif;
-  background: #eee;
+  padding: 60px 0;
+  background: #ffffff;
+}
+
+.footer {
+  padding-top: 30px;
 }
 
 a, h1, h2 {
@@ -65,7 +69,6 @@ h2 {
 
 .error {
   color: red;
-  background: #FFFFFF;
   padding: 0.8em;
 }
 

@@ -93,7 +93,7 @@ class AllTest(unittest.TestCase):
     def test_user_registration(self):
         self.app.get('register/', follow_redirects=True)
         response = self.register('Michael', 'michael@realpython.com', 'python', 'python')
-        self.assertIn(b'Thanks for registering, Please login.', response.data)
+        self.assertIn(b'Thanks for registering. Please login.', response.data)
 
     def test_user_registration_error(self):
         self.app.get('register/', follow_redirects=True)
@@ -175,7 +175,7 @@ class AllTest(unittest.TestCase):
         self.login('Fletcher', 'python101')
         self.app.get('tasks/', follow_redirects=True)
         response = self.app.get("complete/1/", follow_redirects=True)
-        self.assertIn(b'The task is complete. Why not add a new one?', response.data)
+        self.assertIn(b'The task is complete. Nice.', response.data)
 
 
 if __name__ == "__main__":

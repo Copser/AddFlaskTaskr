@@ -18,6 +18,18 @@ db = SQLAlchemy(app)
 from models import Task, User
 
 
+# helper functions
+def login_required(test):
+    @wraps(test)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return test(*args, **kwargs)
+        else:
+            flash('You need to login first.')
+            return redirect(url_for('login'))
+    return wrap
+
+
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
@@ -36,18 +48,6 @@ def closed_tasks():
         status='0').order_by(Task.due_date.asc())
 
 
-# helper functions
-def login_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-    return wrap
-
-
 # route handlers
 
 @app.route('/logout/')
@@ -55,6 +55,7 @@ def login_required(test):
 def logout():
     session.pop('logged_in', None)
     session.pop('user_id', None)
+    session.pop('role', None)
     flash('Goodbye!')
     return redirect(url_for('login'))
 
@@ -69,6 +70,7 @@ def login():
             if user is not None and user.password == request.form['password']:
                 session['logged_in'] = True
                 session['user_id'] = user.id
+                session['role'] = user.role
                 flash("Welcome!")
                 return redirect(url_for('tasks'))
             else:
@@ -129,9 +131,12 @@ def new_task():
             db.session.commit()
             flash("New entry was successfully posted. Thanks.")
             return redirect(url_for('tasks'))
-        else:
-            return render_template('tasks.html', form=form, error=error)
-    return render_template('tasks.html', form=form, error=error, open_tasks=open_tasks(), closed_tasks=closed_tasks())
+    return render_template(
+        'tasks.html',
+        form=form,
+        error=error,
+        open_tasks=open_tasks(),
+        closed_tasks=closed_tasks())
 
 
 # Mark tasks as complete
@@ -140,7 +145,7 @@ def new_task():
 def complete(task_id):
     new_id = task_id
     task = db.session.query(Task).filter_by(task_id=new_id)
-    if session['user_id'] == task.first().user_id:
+    if session['user_id'] == task.first().user_id or session['role'] == 'admin':
         task.update({"status": "0"})
         db.session.commit()
         flash("The task is complete. Nice.")
@@ -156,7 +161,7 @@ def complete(task_id):
 def delete_entry(task_id):
     new_id = task_id
     task = db.session.query(Task).filter_by(task_id=new_id)
-    if session['user_id'] == task.filter_by().user_id:
+    if session['user_id'] == task.first().user_id or session['role'] == 'admin':
         task.delete()
         db.session.commit()
         flash('The tasks was delted. Why not add a new one?')

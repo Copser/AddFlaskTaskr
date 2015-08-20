@@ -158,7 +158,7 @@ class AllTest(unittest.TestCase):
         self.app.get('tasks/', follow_redirects=True)
         self.create_tasks()
         self.logout()
-        self.create_admin_usere()
+        self.create_admin_user()
         self.login('Superman', 'allpowerful')
         self.app.get('tasks/', follow_redirects=True)
         response = self.app.get('complete/1/', follow_redirects=True)

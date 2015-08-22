@@ -20,11 +20,10 @@ with sqlite3.connect(DATABASE_PATH) as connection:
     c.execute("""SELECT name, due_date, priority, status FROM old_tasks ORDER BY task_id ASC""")
 
     # save all rows as a list of tuples; set posted_data to now and user_id to 1
-    data = [(row[0], row[1], row[2], row[3], datetime.now(), 1) for row in c.fetchall()]
-
+    data = [(row[0], row[1], row[2], 'user') for row in c.fetchall()]
     # insert data to tasks table
-    c.executemany("""INSERT INTO tasks (name, due_date, priority, status, posted_date, user_id)
-        VALUES (?, ?, ?, ?, ?, ?)""", data)
+    c.executemany("""INSERT INTO tasks (name, email, password, role)
+        VALUES (?, ?, ?, ?)""", data)
 
     # delete old_tasks table
     c.execute("DROP TABLE old_tasks")

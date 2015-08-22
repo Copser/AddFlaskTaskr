@@ -22,7 +22,7 @@ with sqlite3.connect(DATABASE_PATH) as connection:
     # save all rows as a list of tuples; set posted_data to now and user_id to 1
     data = [(row[0], row[1], row[2], 'user') for row in c.fetchall()]
     # insert data to tasks table
-    c.executemany("""INSERT INTO tasks (name, email, password, role)
+    c.executemany("""INSERT INTO users (name, email, password, role)
         VALUES (?, ?, ?, ?)""", data)
 
     # delete old_tasks table

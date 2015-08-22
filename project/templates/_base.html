@@ -4,13 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome! to FlaskTaskr!!</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Welcome to FlaskTaskr!!!</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   </head>
   <body>
+
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -34,7 +37,6 @@
       </div>
     </div>
 
-
     <div class="container">
       <div class="content">
 
@@ -46,17 +48,15 @@
           <div class="error"><strong>Error:</strong> {{ error }}</div>
         {% endif %}
 
-        <br>
-
         {% block content %}
         {% endblock %}
 
-    </div>
-    </div>
-    <div class="footer">
-      <hr>
-      <p>&copy; <a href="https://www.realpython.com">Real Python</a></p>
-    </div><!--/.container-->
+      </div>
+      <div class="footer">
+        <hr>
+        <p>&copy; <a href="https://www.realpython.com">Real Python</a></p>
+      </div>
+    </div><!-- /.container -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

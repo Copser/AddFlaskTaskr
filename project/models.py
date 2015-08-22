@@ -1,5 +1,8 @@
 # project/models.py
+
+
 from views import db
+
 import datetime
 
 
@@ -24,15 +27,12 @@ class Task(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-        return "<name {0}>".format(self.name)
+        return '<name {0}>'.format(self.name)
 
 
 class User(db.Model):
-    """ New User class will allow multiple users access to task menager by settin
-        up the registration form. We will create a new table in our database to
-        house user data.
-    """
-    __tablename__ = "users"
+
+    __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
@@ -48,4 +48,4 @@ class User(db.Model):
         self.role = role
 
     def __repr__(self):
-        return "<User {0}>".format(self.name)
+        return '<User {0}>'.format(self.name)

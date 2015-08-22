@@ -26,7 +26,6 @@ class AddTaskForm(Form):
 
 
 class RegisterForm(Form):
-    """Users RegisterForm"""
     name = StringField(
         'Username',
         validators=[DataRequired(), Length(min=6, max=25)]
@@ -40,12 +39,11 @@ class RegisterForm(Form):
         validators=[DataRequired(), Length(min=6, max=40)])
     confirm = PasswordField(
         'Repeat Password',
-        validators=[DataRequired(), EqualTo('password', message='Password must match!')]
+        validators=[DataRequired(), EqualTo('password')]
     )
 
 
 class LoginForm(Form):
-    """docstring for LoginForm"""
     name = StringField(
         'Username',
         validators=[DataRequired()]

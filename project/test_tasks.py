@@ -153,7 +153,7 @@ class AllTest(unittest.TestCase):
         )
 
     def test_admin_users_can_complete_tasks_that_are_not_created_by_them(self):
-        self.create_user('Michael', 'michael@realpython.com', 'python')
+        self.create_user()
         self.login('Michael', 'python')
         self.app.get('tasks/', follow_redirects=True)
         self.create_tasks()
@@ -167,7 +167,7 @@ class AllTest(unittest.TestCase):
         )
 
         def test_admin_users_can_delete_tasks_that_are_not_created_by_them(self):
-            self.create_user('Michael', 'michael@realpython.com', 'python')
+            self.create_user()
             self.login('Michael', 'python')
             self.app.get('tasks/', follow_redirects=True)
             self.create_tasks()

@@ -1,7 +1,7 @@
 # imports
 from functools import wraps
 from flask import flash, redirect, render_template, \
-        request, session, url_for, Blueprint
+    request, session, url_for, Blueprint
 from sqlalchemy.exc import IntegrityError
 
 from .forms import RegisterForm, LoginForm
@@ -10,6 +10,7 @@ from project.models import User
 
 # config
 users_blueprint = Blueprint('users', __name__)
+
 
 # helper functions
 def login_required(test):
@@ -23,6 +24,7 @@ def login_required(test):
             return redirect(url_for('users.login'))
     return wrap
 
+
 # routues
 @users_blueprint.route('/logout/')
 @login_required
@@ -32,6 +34,7 @@ def logout():
     session.pop('role', None)
     flash('Goodbye!')
     return redirect(url_for('users.login'))
+
 
 @users_blueprint.route('/', methods=['GET', 'POST'])
 def login():
@@ -51,11 +54,12 @@ def login():
                 error = 'Invalid username or password.'
     return render_template('login.html', form=form, error=error)
 
-@users_blueprint('/register/', methods=['GET', 'POST'])
+
+@users_blueprint.route('/register/', methods=['GET', 'POST'])
 def register():
     """docstring for register"""
     error = None
-    form  = RegisterForm(request.form)
+    form = RegisterForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
             new_user = User(
@@ -72,7 +76,3 @@ def register():
                 error = 'That username and/or email already exist.'
                 return render_template('register.html', form=form, error=error)
     return render_template('register.html', form=form, error=error)
-
-
-
-

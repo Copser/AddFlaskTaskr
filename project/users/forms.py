@@ -20,6 +20,8 @@ class RegisterForm(Form):
         'Repeat Password',
         validators=[DataRequired(), EqualTo('password')]
 
+    )
+
 
 class LoginForm(Form):
     name = StringField(

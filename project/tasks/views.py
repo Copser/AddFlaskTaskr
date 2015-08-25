@@ -64,7 +64,7 @@ def new_task():
             db.session.add(new_task)
             db.session.commit()
             flash('New entry was successfully posted. Thanks.')
-            return render_template(url_for('tasks.tasks'))
+            return redirect(url_for('tasks.tasks'))
     return render_template(
         'tasks.html',
         form=form,
@@ -84,7 +84,7 @@ def complete(task_id):
         task.update({"status": "0"})
         db.session.commit()
         flash('The task is complete. Nice.')
-        return render_template(url_for('tasks.tasks'))
+        return redirect(url_for('tasks.tasks'))
     else:
         flash('You can only update tasks that belong to you.')
         return redirect(url_for('tasks.tasks'))

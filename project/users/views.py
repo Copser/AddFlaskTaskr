@@ -43,7 +43,7 @@ def login():
     form = LoginForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            user = User.queru.filter_by(name=request.form['name']).first()
+            user = User.query.filter_by(name=request.form['name']).first()
             if user is not None and user.password == request.form['password']:
                 session['logged_in'] = True
                 session['user_id'] = user.id

@@ -4,20 +4,16 @@
 import os
 import unittest
 
-from views import app, db
-from _config import basedir
-from models import Task, User
+from project import app, db
+from project._config import basedir
+from project.models import Task, User
 
 TEST_DB = 'test.db'
 
 
 class TasksTests(unittest.TestCase):
-
-    ############################
-    #### setup and teardown ####
-    ############################
-
-    # executed prior to each test
+    """Setup and Teardown"""
+    # execute prior to each test
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False

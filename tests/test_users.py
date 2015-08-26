@@ -12,12 +12,7 @@ TEST_DB = 'test.db'
 
 
 class UsersTests(unittest.TestCase):
-
-    ############################
-    #### setup and teardown ####
-    ############################
-
-    # executed prior to each test
+    # setup and tearDown,  executed prior to each test
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
@@ -31,11 +26,7 @@ class UsersTests(unittest.TestCase):
         db.session.remove()
         db.drop_all()
 
-
-    ########################
-    #### helper methods ####
-    ########################
-
+    # helper functions
     def login(self, name, password):
         return self.app.post('/', data=dict(
             name=name, password=password), follow_redirects=True)
@@ -72,6 +63,19 @@ class UsersTests(unittest.TestCase):
         for t in test:
             t.name
         assert t.name == "michael"
+
+    def test_task_template_displays_logged_in_user_name(self):
+        """TODO: Docstring for test_task_template_displays_logged_in_user_name.
+        :returns: TODO
+
+         """
+        self.register(
+            'Fletcher', 'fletcher@realpython.com', 'python101',
+            'python101'
+        )
+        self.login('Fletcher', 'python101')
+        response = self.app.get('tasks/', follow_redirects=True)
+        self.assertIn(b'Fletcher', response.data)
 
     def test_form_is_present_on_login_page(self):
         response = self.app.get('/')

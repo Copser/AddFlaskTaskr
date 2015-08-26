@@ -64,19 +64,6 @@ class UsersTests(unittest.TestCase):
             t.name
         assert t.name == "michael"
 
-    def test_task_template_displays_logged_in_user_name(self):
-        """TODO: Docstring for test_task_template_displays_logged_in_user_name.
-        :returns: TODO
-
-         """
-        self.register(
-            'Fletcher', 'fletcher@realpython.com', 'python101',
-            'python101'
-        )
-        self.login('Fletcher', 'python101')
-        response = self.app.get('tasks/', follow_redirects=True)
-        self.assertIn(b'Fletcher', response.data)
-
     def test_form_is_present_on_login_page(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)

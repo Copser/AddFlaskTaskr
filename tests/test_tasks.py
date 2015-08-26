@@ -206,5 +206,13 @@ class TasksTests(unittest.TestCase):
             self.assertEqual(task.name, 'Run around in circles')
 
 
+    def test_form_is_present_on_login_page(self):
+        self.register(
+            'Fletcher', 'fletcher@realpython.com', 'python101', 'python101'
+        )
+        self.login('Fletcher', 'python101')
+        response = self.app.get('tasks/', follow_redirects=True)
+        self.assertIn(b'Fletcher', response.data)
+
 if __name__ == "__main__":
     unittest.main()

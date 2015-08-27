@@ -1,5 +1,6 @@
 # project/__init__.py
-from flask import Flask, render_template
+import datetime
+from flask import Flask, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
 
@@ -23,6 +24,12 @@ def not_found(error):
     :returns: TODO
 
     """
+    if app.debug is not True:
+        now = datetime.datetime.now()
+        r = request.url
+        with open('error.log', 'a') as f:
+            current_timestamp = now.strftime("%d-%m-%Y %H:%M:%S")
+            f.write("\n404 error at {}: {}".format(current_timestamp, r))
     return render_template('404.html'), 404
 
 
@@ -32,4 +39,11 @@ def internal_error(error):
     :returns: TODO
 
     """
+    db.session.rollback()
+    if app.debug is not True:
+        now = datetime.datetime.now()
+        r = request.url
+        with open('error.log', 'a') as f:
+            current_timestamp = now.strftime("%d-%m-%Y %H:%M:%S")
+            f.write("\n500 error at {}: {}".format(current_timestamp, r))
     return render_template('500.html'), 500

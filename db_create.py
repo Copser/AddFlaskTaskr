@@ -9,7 +9,7 @@ from project.models import Task, User
 # create the database and the db table
 db.create_all()
 
-# insert data
+#  insert data
 db.session.add(
     User("admin", "ad@min.com", "admin", "admin")
 )

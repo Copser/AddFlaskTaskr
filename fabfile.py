@@ -43,3 +43,51 @@ def prepare():
     test()
     commit()
     push()
+
+
+# Heroku deploymend section
+def pull():
+    """TODO: Docstring for pull.
+    :returns: TODO
+    Bulding set of code to pull
+    latest code from GitHub.
+    """
+    local("git pull origin master")
+
+
+def heroku():
+    """TODO: Docstring for heroku.
+    :returns: TODO
+    Code for pushing to Herkolu
+    """
+    local("git push heroku master")
+
+
+def heroku_test():
+    """TODO: Docstring for heroku_test.
+    :returns: TODO
+    When pushed on initialize tests for the
+    applicaiton.
+    """
+    local("heroku run nosetests -v")
+
+
+def deploy():
+    """TODO: Docstring for deploy.
+    :returns: TODO
+
+    """
+    pull()
+    test()
+    commit()
+    heroku()
+    heroku_test()
+
+
+# rollback
+def rollback():
+    """TODO: Docstring for rollback.
+    :returns: TODO
+
+    """
+    local("heroku rollback")

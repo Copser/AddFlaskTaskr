@@ -75,8 +75,7 @@ class APITests(unittest.TestCase):
 
         """
         self.add_tasks()
-        response = self.app.get('api/v1/tasks/',
-                                follow_redirects=True)
+        response = self.app.get('api/v1/tasks/', follow_redirects=True)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.mimetype, 'application/json')
         self.assertIn(b'Run around in circles', response.data)

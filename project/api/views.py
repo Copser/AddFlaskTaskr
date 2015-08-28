@@ -1,4 +1,4 @@
-project/api/views.py
+# project/api/views.py
 from functools import wraps
 from flask import flash, redirect, jsonify, \
     session, url_for, Blueprint

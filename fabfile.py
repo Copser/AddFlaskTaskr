@@ -58,7 +58,7 @@ def pull():
 def heroku():
     """TODO: Docstring for heroku.
     :returns: TODO
-    Code for pushing to Herkolu
+    Code for pushing to Heroku
     """
     local("git push heroku master")
 

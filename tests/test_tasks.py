@@ -3,7 +3,7 @@ import os
 import unittest
 
 from project import app, db, bcrypt
-from project._config import basedir
+from project._config import BASE_DIR
 from project.models import Task, User
 
 TEST_DB = 'test.db'
@@ -17,7 +17,7 @@ class TasksTests(unittest.TestCase):
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-            os.path.join(basedir, TEST_DB)
+            os.path.join(BASE_DIR, TEST_DB)
         self.app = app.test_client()
         db.create_all()
         self.assertEquals(app.debug, False)

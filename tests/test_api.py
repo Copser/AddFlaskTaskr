@@ -4,7 +4,7 @@ import unittest
 from datetime import date
 
 from project import app, db
-from project._config import basedir
+from project._config import BASE_DIR
 from project.models import Task
 
 TEST_DB = 'test.db'
@@ -14,7 +14,7 @@ class APITests(unittest.TestCase):
 
     """Docstring for APITests. Setup and Teardown."""
     # execute prior to each test
-    def setup(self):
+    def setUp(self):
         """TODO: Docstring for setup.
         :returns: TODO
 
@@ -22,8 +22,8 @@ class APITests(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
-        app.config['SQLALCHEMY_DATABSE_URI'] = 'sqlite:///' + \
-            os.path.join(basedir, TEST_DB)
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+            os.path.join(BASE_DIR, TEST_DB)
         self.app = app.test_client()
         db.create_all()
 
@@ -80,6 +80,18 @@ class APITests(unittest.TestCase):
         self.assertEquals(response.mimetype, 'application/json')
         self.assertIn(b'Run around in circles', response.data)
         self.assertIn(b'Purchase Real Python', response.data)
+
+    def test_resource_endpoint_returns_correct_data(self):
+        """TODO: Docstring for test_resource_endpoint_returns_correct_data.
+        :returns: TODO
+
+        """
+        self.add_tasks()
+        response = self.api.get('api/v1/tasks/2', follow_redirects=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.mimetype, 'application/json')
+        self.assertIn(b'Purchase Real Python', response.data)
+        self.assertIn(b'Run around in circles', response.data)
 
 
 if __name__ == "__main__":

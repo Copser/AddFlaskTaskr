@@ -67,3 +67,22 @@ def api_tasks():
             }
         json_results.append(data)
     return jsonify(items=json_results)
+
+
+@api_blueprint.route('/api/v1/tasks/<int:task_id>')
+def task(task_id):
+    """TODO: Docstring for task.
+    :returns: TODO
+
+    """
+    result = db.session.query(Task).filter_by(task_id=task_id).first()
+    json_result = {
+        'task_id': result.task_id,
+        'task_name': result.name,
+        'task.due_date': str(result.due_date),
+        'priority': result.priority,
+        'posted_date': str(result.posted_date),
+        'status': result.status,
+        'user_id': result.user_id
+    }
+    return jsonify(items=json_result)

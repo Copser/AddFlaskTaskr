@@ -87,11 +87,22 @@ class APITests(unittest.TestCase):
 
         """
         self.add_tasks()
-        response = self.api.get('api/v1/tasks/2', follow_redirects=True)
+        response = self.app.get('api/v1/tasks/2', follow_redirects=True)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.mimetype, 'application/json')
         self.assertIn(b'Purchase Real Python', response.data)
         self.assertIn(b'Run around in circles', response.data)
+
+    def test_invalid_recource_endpoint_returns_error(self):
+        """TODO: Docstring for test_invalid_recource_endpoint_returns_error.
+        :returns: TODO
+
+        """
+        self.add_tasks()
+        response = self.app.get('api/v1/tasks/209', follow_redirects=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.mimetype, 'application/json')
+        self.assertIn(b'Element does not exist', response.data)
 
 
 if __name__ == "__main__":

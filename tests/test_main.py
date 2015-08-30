@@ -51,5 +51,13 @@ class MainTest(unittest.TestCase):
         self.assertEquals(response.status_code, 404)
         self.assertIn(b'Sorry. There\'s nothing here.', response.data)
 
+    def test_index(self):
+        """TODO: Enshure flask was set up correctly.
+        :returns: TODO
+
+        """
+        response = self.app.get('/', conect_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
 if __name__ == "__main__":
     unittest.main()

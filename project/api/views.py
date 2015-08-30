@@ -89,5 +89,5 @@ def task(task_id):
         code = 200
     else:
         result = {"error": "Element does not exist"}
-        code = 400
+        code = 404
     return make_response(jsonify(result), code)

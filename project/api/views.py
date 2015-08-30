@@ -1,7 +1,7 @@
 # project/api/views.py
 from functools import wraps
 from flask import flash, redirect, jsonify, \
-    session, url_for, Blueprint
+    session, url_for, Blueprint, make_response
 
 from project import db
 from project.models import Task
@@ -77,7 +77,7 @@ def task(task_id):
     """
     result = db.session.query(Task).filter_by(task_id=task_id).first()
     if result:
-        json_result = {
+        result = {
             'task_id': result.task_id,
             'task_name': result.name,
             'task.due_date': str(result.due_date),
@@ -86,7 +86,8 @@ def task(task_id):
             'status': result.status,
             'user_id': result.user_id
         }
-        return jsonify(items=json_result)
+        code = 200
     else:
         result = {"error": "Element does not exist"}
-        return jsonify(result)
+        code = 400
+    return make_response(jsonify(result), code)

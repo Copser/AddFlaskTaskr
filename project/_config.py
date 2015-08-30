@@ -11,7 +11,7 @@ db_path = os.path.join(BASE_DIR, 'flasktaskr.db')
 DATABASE = 'flasktaskr.db'
 CSRF_ENABLED = True
 SECRET_KEY = 'my_precious'
-DEBUG = True
+DEBUG = False
 
 # define the full path for the database
 DATABASE_PATH = os.path.join(BASE_DIR, DATABASE)

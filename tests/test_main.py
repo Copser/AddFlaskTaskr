@@ -56,7 +56,7 @@ class MainTest(unittest.TestCase):
         :returns: TODO
 
         """
-        response = self.app.get('/', conect_type='html/text')
+        response = self.app.get('/', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
 if __name__ == "__main__":

@@ -1,17 +1,17 @@
-# specify language
 language:
-  - python
-
-# specify python vesrion(s)
+- python
 python:
-  - "3.3"
-  - "3.4"
-  - "2.7"
-
-# install dependencies
+- '3.3'
+- '3.4'
+- '2.7'
 install:
-  - pip install -r requirements.txt
-
-# run tests
+- pip install -r requirements.txt
 script:
-  - nosetests
+- nosetests
+deploy:
+  provider: heroku
+  api_key:
+    secure: QGlTfut8IV15/NaPTTQkYQGHBGletU2QsyhU8VrUAhaY8c2k3QVb5BO3qAZgOyOIwlMcSZ60PiSCp9PPllb10p0b7rcMj07S5300p0MzyTZ8k0gB0dGrnQI1snLVclYlUVXglLK3t2yee4n2DjVn4enl36zL+waE2S912qQMZA2gUVXYnNSE0dbMngLvmALYpjUD9Ap2HeYvTuwaiylGYIFDT79IAPBY2bZDgGWxg3AIkP5zXuIEA3Yo47SdUyy6tjeRqXSmsBPC1LCg+ePAtNHSXjMzdMazmNqghwUExezY3kt6R6D0bjuKEQ+1vN3hBfl75lCSsoXbdMZ0rfi9NxdPPptNQzoW25HGMlSPmh5Af3dPBaG2fuZQiUmut/c9rZPgx3eLRo002HkVTdyzT6H09DR+MUv/48UtFQFRNbaM+8moS5tJJSzb9oGQ0QqMwGdcp1Fng6lVD1ly/0LyGiKWCC+dQdooC61vV7kID/Q2gVTyWBBPG9awX7VmS2LhVOhGQMFnxYvKss6cjTXskNCKrGtV5u/tqGOMgPJdRIISWNAfIvs7rV8t4XJyjkhxAmk4jDekUpZajSwE/+6Nyoi9o88XabKEhVHUCLondrb489/DZbXQ+6YasNEIwUDCJOD4FS7GslAW+DqRoowDwBA2fuIsXAaW+Zy5N7dJfyQ=
+  app: morning-sierra-3397
+  on:
+    repo: Copser/AddFlaskTaskr
